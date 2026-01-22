@@ -1,0 +1,53 @@
+@import 'tailwindcss';
+
+.font-arabic {
+  font-family: var(--font-cairo), sans-serif;
+}
+
+/* RTL support */
+[dir='rtl'] {
+  text-align: right;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: background-color, color, border-color, opacity, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Remove transitions for elements that shouldn't animate */
+button, a, input, select, textarea {
+  transition-property: background-color, color, border-color, transform, box-shadow;
+}
+
+/* Scrollbar styling for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(234, 179, 8, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(234, 179, 8, 0.5);
+}
+
+/* Better font rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid rgba(234, 179, 8, 0.5);
+  outline-offset: 2px;
+}
