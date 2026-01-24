@@ -24,7 +24,6 @@ export default function Contact({}: ContactProps) {
     message: isRTL
       ? "هل أنت مستعد لتجربة الرفاهية؟ اتصل بنا اليوم!"
       : "Ready to experience luxury? Contact us today!",
-    callNow: isRTL ? "اتصل الآن" : "Call Now",
     whatsapp: isRTL ? "محادثة واتساب" : "Chat on WhatsApp",
     followUs: isRTL ? "تابعنا" : "Follow Us",
     location: isRTL ? "جراند مول عجمان" : "Grand Mall Ajman",
@@ -113,28 +112,7 @@ export default function Contact({}: ContactProps) {
 
           {/* Contact Information */}
           <div className="space-y-6 sm:space-y-8">
-            {/* Phone Number */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-              <a
-                href="tel:+971542002332"
-                className="group flex items-center gap-2.5 sm:gap-3 px-4 sm:px-6 py-3 rounded-xl bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-sm border border-slate-600/50 hover:border-yellow-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/10"
-              >
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-green-500/20 to-green-600/20 border border-green-500/30 group-hover:border-green-400/50 transition-colors">
-                  <Phone className="w-5 h-5 text-green-400" />
-                </div>
-                <div className={isRTL ? "text-right" : "text-left"}>
-                  <p className="text-xs sm:text-sm text-slate-400 group-hover:text-slate-300 transition-colors">
-                    {content.callNow}
-                  </p>
-                  <p
-                    className="text-base sm:text-lg font-semibold text-white"
-                    dir="ltr"
-                  >
-                    {content.phone}
-                  </p>
-                </div>
-              </a>
-
               <a
                 href="https://wa.me/971542002332"
                 target="_blank"
