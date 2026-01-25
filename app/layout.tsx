@@ -5,6 +5,9 @@ import { Language, Theme } from '@/types/i18n';
 import { LanguageProvider } from './context/LanguageContext';
 import type { Metadata } from 'next';
 
+/* ============================
+   FONT
+   ============================ */
 const cairo = Cairo({
   subsets: ['arabic', 'latin'],
   weight: ['400', '600', '700'],
@@ -110,6 +113,81 @@ export const metadata: Metadata = {
 };
 
 /* ============================
+   LOCAL BUSINESS SCHEMA
+   ============================ */
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "SportsActivityLocation",
+  "@id": "https://alruknaldhahabi.com/#localbusiness",
+
+  name: "الركن الذهبي للبلياردو",
+  alternateName: "Al Rukn Al Dhahabi Billiards",
+
+  url: "https://alruknaldhahabi.com",
+
+  description:
+    "الركن الذهبي صالة بلياردو وألعاب في عجمان، الإمارات. بلياردو، سنوكر، بلايستيشن، تنس طاولة وكافتيريا خفيفة.",
+
+  image: "https://alruknaldhahabi.com/og-image.png",
+
+  telephone: "+971542002332",
+  email: "alruknaldhahabi979@gmail.com",
+
+  sameAs: [
+    "https://www.instagram.com/alrukn.aldhahabi/",
+    "https://www.tiktok.com/@alrukn.aldhahabi",
+    "https://maps.app.goo.gl/pMWScpS4oHUYFNKYA"
+  ],
+
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Grand Mall, Al Rashidiya 3",
+    addressLocality: "Ajman",
+    addressRegion: "Ajman",
+    addressCountry: "AE"
+  },
+
+  areaServed: {
+    "@type": "AdministrativeArea",
+    name: "Ajman"
+  },
+
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Saturday",
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday"
+      ],
+      opens: "10:00",
+      closes: "03:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: "Friday",
+      opens: "13:45",
+      closes: "03:00"
+    }
+  ],
+
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Billiards & Gaming Services",
+    itemListElement: [
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Billiards (Pool)" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Snooker" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "PlayStation Gaming" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Table Tennis" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Cafeteria (Drinks & Snacks)" } }
+    ]
+  }
+};
+
+/* ============================
    ROOT LAYOUT
    ============================ */
 export default async function RootLayout({
@@ -124,7 +202,7 @@ export default async function RootLayout({
   const language =
     savedLanguage ||
     (headersList.get('x-language') as Language) ||
-    'ar'; // default AR for UAE
+    'ar';
 
   const savedTheme = cookieStore.get('theme')?.value as Theme;
   const theme = savedTheme || 'light';
@@ -138,21 +216,18 @@ export default async function RootLayout({
       className={`${cairo.variable} ${theme}`}
     >
       <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=5"
-        />
-        <meta
-          name="theme-color"
-          content="#ffffff"
-          media="(prefers-color-scheme: light)"
-        />
-        <meta
-          name="theme-color"
-          content="#111827"
-          media="(prefers-color-scheme: dark)"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)" />
         <link rel="canonical" href="https://alruknaldhahabi.com" />
+
+        {/* LocalBusiness Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(localBusinessSchema),
+          }}
+        />
       </head>
 
       <body className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
