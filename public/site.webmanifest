@@ -1,7 +1,8 @@
 {
-  "name": "Al Rukn Al Dhahabi | الركن الذهبي",
+  "name": "الركن الذهبي للبلياردو | Al Rukn Al Dhahabi",
   "short_name": "Al Rukn",
-  "description": "Transform your digital presence with cutting-edge solutions",
+  "description": "الركن الذهبي صالة بلياردو وألعاب في عجمان، الإمارات. بلياردو، سنوكر، بلايستيشن ومنطقة ألعاب حديثة.",
+  "lang": "ar",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -20,6 +21,6 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "start_url": "/",
-  "orientation": "portrait",
-  "scope": "/"
+  "scope": "/",
+  "orientation": "portrait"
 }
