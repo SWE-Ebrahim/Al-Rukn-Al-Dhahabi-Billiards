@@ -24,7 +24,7 @@ export default function Contact({}: ContactProps) {
     message: isRTL
       ? "هل أنت مستعد لتجربة الرفاهية؟ اتصل بنا اليوم!"
       : "Ready to experience luxury? Contact us today!",
-    whatsapp: isRTL ? "محادثة واتساب" : "Chat on WhatsApp",
+    whatsapp: isRTL ? "للحجز تواصل معنا" : "for appointments",
     followUs: isRTL ? "تابعنا" : "Follow Us",
     location: isRTL ? "جراند مول عجمان" : "Grand Mall Ajman",
     phone: "+971 54 200 2332",

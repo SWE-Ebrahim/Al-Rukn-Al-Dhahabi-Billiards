@@ -11,7 +11,7 @@ export function getTranslations(lang: Language): Translations {
       heroTitle: 'Al Rukn Al Dhahabi',
       location: 'Grand Mall, Al Rashidiya 3, Ajman',
       heroDescription: 'Your premier destination for billiards, PlayStation gaming, and entertainment in Ajman',
-      contactUs: 'Call Now',
+      contactUs: 'Contact',
       viewServices: 'Our Services',
       // Add gallery translations
       galleryTitle: 'Gallery',
@@ -27,11 +27,11 @@ export function getTranslations(lang: Language): Translations {
       subtitle: 'للبلياردو',
       about: 'من نحن',
       services: 'الخدمات',
-      contact: 'اتصل بنا',
+      contact: 'تواصل معنا',
       heroTitle: 'الركن الذهبي',
       location: 'جراند مول، الراشدية ٣، عجمان',
       heroDescription: 'وجهتك المثالية للبلياردو وألعاب البلايستيشن والترفيه في عجمان',
-      contactUs: 'اتصل بنا',
+      contactUs: 'تواصل معنا',
       viewServices: 'خدماتنا',
       // Add gallery translations
       galleryTitle: 'معرض الصور',

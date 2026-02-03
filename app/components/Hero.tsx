@@ -2,7 +2,7 @@
 
 import { Instagram, MapPin, Phone, Globe } from "lucide-react";
 import { FaTiktok } from "react-icons/fa";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useLanguage } from "../context/LanguageContext";
 
 interface HeroProps {}
@@ -11,6 +11,22 @@ export default function Hero({}: HeroProps) {
   const { language, translations, setLanguage } = useLanguage();
   const [mounted, setMounted] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const backgroundImages = [
+    "https://res.cloudinary.com/dtwjhjtjw/image/upload/v1769009201/image2.jpg",
+    "https://res.cloudinary.com/dtwjhjtjw/image/upload/v1769009201/image3.jpg",
+    "https://res.cloudinary.com/dtwjhjtjw/image/upload/v1769248245/photo2.jpg"
+  ];
+
+  // Rotate images every 2 seconds immediately when mounted
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex(prev => (prev + 1) % backgroundImages.length);
+    }, 2000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -18,7 +34,6 @@ export default function Hero({}: HeroProps) {
 
   const isRTL = language === "ar";
 
-  // Use translations from context
   const t = {
     subtitle: translations.subtitle,
     heroTitle: translations.heroTitle,
@@ -33,23 +48,26 @@ export default function Hero({}: HeroProps) {
       icon: Instagram,
       href: "https://www.instagram.com/alrukn.aldhahabi/",
       label: "Instagram",
-      color: "hover:text-pink-500",
+      color: "text-pink-500",
+      hoverColor: "hover:text-pink-400"
     },
     {
       icon: FaTiktok,
       href: "https://www.tiktok.com/@alrukn.aldhahabi",
       label: "TikTok",
-      color: "hover:text-white",
+      color: "text-white",
+      hoverColor: "hover:text-gray-200"
     },
     {
       icon: MapPin,
       href: "https://maps.google.com/?q=Grand+Mall+Ajman+Al+Rukn+Al+Dhahabi",
       label: "Google Maps",
-      color: "hover:text-emerald-400",
+      color: "text-red-500",
+      hoverColor: "hover:text-red-400"
     },
   ];
 
-  const toggleLanguage = () => {
+  const toggleLanguage = useCallback(() => {
     const newLanguage = language === "en" ? "ar" : "en";
     setIsTransitioning(true);
 
@@ -59,7 +77,7 @@ export default function Hero({}: HeroProps) {
         setIsTransitioning(false);
       }, 50);
     }, 200);
-  };
+  }, [language, setLanguage]);
 
   if (!mounted) {
     return <div className="h-screen bg-slate-950"></div>;
@@ -70,60 +88,59 @@ export default function Hero({}: HeroProps) {
       dir={isRTL ? "rtl" : "ltr"}
       className="relative h-screen overflow-hidden bg-slate-950"
     >
-      {/* Enhanced Background Elements */}
+      {/* Background Images - Visible Immediately */}
       <div className="absolute inset-0">
-        {/* Radial Gradient */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(234,179,8,0.15),transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(234,179,8,0.1),transparent_50%)]"></div>
-
-        {/* Floating Orbs */}
-        <div className="absolute top-20 right-1/4 w-72 h-72 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div
-          className="absolute bottom-20 left-1/4 w-96 h-96 bg-yellow-600/8 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
-        ></div>
-
-        {/* Subtle Grid */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]"></div>
+        {backgroundImages.map((img, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+              index === currentImageIndex ? "opacity-100" : "opacity-0"
+            }`}
+            style={{ 
+              backgroundImage: `url(${img})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              filter: 'brightness(0.75) contrast(1.05)'
+            }}
+          />
+        ))}
       </div>
+      
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-slate-900/40 to-slate-950/50" />
 
-      {/* Content Container with Transition */}
+      {/* Content Container */}
       <div
         className={`relative h-full flex flex-col transition-opacity duration-200 ${isTransitioning ? "opacity-0" : "opacity-100"}`}
       >
         {/* Header */}
-        <header className="flex-shrink-0 px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 lg:pt-8">
+        <header className="flex-shrink-0 px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 lg:pt-8 z-10">
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-center">
               {/* 8-Ball Logo */}
               <div className="flex items-center gap-3 sm:gap-4">
-                {/* 8-Ball SVG Icon */}
-                <div className="relative group">
-                  <div className="absolute inset-0 bg-yellow-500/20 rounded-full blur-lg group-hover:bg-yellow-500/30 transition-all duration-300"></div>
+                <div className="relative group cursor-pointer">
+                  <div className="absolute inset-0 bg-yellow-500/30 rounded-full blur-xl group-hover:bg-yellow-500/50 transition-all duration-300 animate-pulse"></div>
                   <svg
-                    width="48"
-                    height="48"
+                    width="60"
+                    height="60"
                     viewBox="0 0 100 100"
-                    className="relative w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 drop-shadow-lg transform group-hover:scale-110 transition-transform duration-300"
+                    className="relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 drop-shadow-2xl transform group-hover:scale-110 transition-transform duration-300"
                   >
-                    {/* Outer black circle */}
                     <circle
                       cx="50"
                       cy="50"
                       r="48"
                       fill="#000000"
                       stroke="#333333"
-                      strokeWidth="2"
+                      strokeWidth="2.5"
                     />
-
-                    {/* White circle for number */}
-                    <circle cx="50" cy="50" r="20" fill="#FFFFFF" />
-
-                    {/* Number 8 */}
+                    <circle cx="50" cy="50" r="22" fill="#FFFFFF" className="drop-shadow-lg" />
                     <text
                       x="50"
                       y="50"
-                      fontSize="24"
+                      fontSize="28"
                       fontWeight="bold"
                       fill="#000000"
                       textAnchor="middle"
@@ -132,47 +149,32 @@ export default function Hero({}: HeroProps) {
                     >
                       8
                     </text>
-
-                    {/* Shine effect */}
                     <ellipse
                       cx="35"
                       cy="35"
-                      rx="15"
-                      ry="20"
-                      fill="url(#shine)"
-                      opacity="0.3"
+                      rx="18"
+                      ry="24"
+                      fill="url(#enhancedShine)"
+                      opacity="0.4"
                     />
-
                     <defs>
-                      <radialGradient id="shine">
-                        <stop
-                          offset="0%"
-                          stopColor="#ffffff"
-                          stopOpacity="0.8"
-                        />
-                        <stop
-                          offset="100%"
-                          stopColor="#ffffff"
-                          stopOpacity="0"
-                        />
+                      <radialGradient id="enhancedShine">
+                        <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+                        <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
                       </radialGradient>
                     </defs>
                   </svg>
                 </div>
 
-                {/* Subtitle next to logo */}
                 <div className="hidden sm:block">
-                  <p
-                    className={`text-xs sm:text-sm lg:text-base text-yellow-500/80 font-medium ${isRTL ? "font-arabic" : ""}`}
-                  >
+                  <p className={`text-xs sm:text-sm lg:text-base text-yellow-500/80 font-medium ${isRTL ? "font-arabic" : ""}`}>
                     {t.subtitle}
                   </p>
                 </div>
               </div>
 
               {/* Social Icons + Language Toggle */}
-              <div className="flex items-center gap-2 sm:gap-3">
-                {/* Social Links */}
+              <div className="flex items-center gap-3 sm:gap-4">
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
                   return (
@@ -181,23 +183,22 @@ export default function Hero({}: HeroProps) {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`p-2 sm:p-2.5 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-slate-400 ${social.color} transition-all duration-300 hover:scale-110 hover:bg-white/10 hover:shadow-lg`}
+                      className={`p-3 sm:p-3.5 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-slate-400 ${social.hoverColor} transition-all duration-300 hover:scale-110 hover:bg-white/10 hover:shadow-lg`}
                       aria-label={social.label}
                     >
-                      <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${social.color}`} />
                     </a>
                   );
                 })}
 
-                {/* Language Toggle */}
                 <button
                   onClick={toggleLanguage}
                   disabled={isTransitioning}
-                  className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 backdrop-blur-sm border border-yellow-500/20 hover:border-yellow-500/40 text-yellow-400 hover:text-yellow-300 transition-all duration-300 disabled:opacity-50 hover:shadow-lg hover:shadow-yellow-500/10"
+                  className="flex items-center gap-2 sm:gap-2.5 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 backdrop-blur-sm border border-yellow-500/20 hover:border-yellow-500/40 text-yellow-400 hover:text-yellow-300 transition-all duration-300 disabled:opacity-50 hover:shadow-lg hover:shadow-yellow-500/10 active:scale-95"
                   aria-label="Toggle language"
                 >
-                  <Globe className="w-4 h-4 sm:w-5 sm:h-5" />
-                  <span className="text-xs sm:text-sm font-semibold">
+                  <Globe className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <span className="text-sm sm:text-base font-semibold whitespace-nowrap">
                     {language === "en" ? "العربية" : "English"}
                   </span>
                 </button>
@@ -207,12 +208,10 @@ export default function Hero({}: HeroProps) {
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <main className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12 z-10">
           <div className="max-w-6xl mx-auto w-full">
-            <div
-              className={`text-center space-y-6 sm:space-y-8 lg:space-y-10 ${isRTL ? "font-arabic" : ""}`}
-            >
-              {/* Main Title with Enhanced Styling */}
+            <div className={`text-center space-y-6 sm:space-y-8 lg:space-y-10 ${isRTL ? "font-arabic" : ""}`}>
+              {/* Main Title */}
               <div className="space-y-4 sm:space-y-6">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-slate-400 leading-tight tracking-tight drop-shadow-2xl">
                   {t.heroTitle}
@@ -222,13 +221,13 @@ export default function Hero({}: HeroProps) {
                 </div>
               </div>
 
-              {/* Location Badge with Enhanced Design - Now Clickable */}
+              {/* Location Badge */}
               <div className="flex justify-center animate-fade-in">
                 <a
                   href="https://maps.app.goo.gl/Wsri2g5SX3fMaFPc7"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 sm:gap-3 px-5 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 rounded-2xl bg-gradient-to-r from-yellow-500/10 via-yellow-500/15 to-yellow-500/10 border border-yellow-500/30 backdrop-blur-md hover:border-yellow-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-yellow-500/20 cursor-pointer"
+                  className="group inline-flex items-center gap-2 sm:gap-3 px-5 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 rounded-2xl bg-gradient-to-r from-yellow-500/10 via-yellow-500/15 to-yellow-500/10 border border-yellow-500/30 backdrop-blur-md hover:border-yellow-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-yellow-500/20 cursor-pointer hover:-translate-y-0.5"
                 >
                   <MapPin className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-yellow-400 flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <p className="text-xs sm:text-sm md:text-base lg:text-lg text-yellow-100/90 font-semibold">
@@ -237,20 +236,17 @@ export default function Hero({}: HeroProps) {
                 </a>
               </div>
 
-              {/* Description with Better Readability */}
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-slate-300/90 max-w-4xl mx-auto leading-relaxed px-4">
+              {/* Description */}
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-slate-300/90 max-w-4xl mx-auto leading-relaxed px-4 drop-shadow-lg">
                 {t.heroDescription}
               </p>
 
-              {/* CTA Buttons with Enhanced Styling */}
+              {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 pt-4 sm:pt-6 lg:pt-8">
-                {/* Primary Button */}
                 <button
                   onClick={() => {
                     const contactSection = document.getElementById("contact");
-                    if (contactSection) {
-                      contactSection.scrollIntoView({ behavior: "smooth" });
-                    }
+                    contactSection?.scrollIntoView({ behavior: "smooth" });
                   }}
                   className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-10 lg:px-14 py-3.5 sm:py-4 lg:py-5 bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-500 bg-size-200 bg-pos-0 hover:bg-pos-100 text-white rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg shadow-2xl shadow-yellow-500/30 hover:shadow-yellow-500/50 transition-all duration-500 hover:scale-105 active:scale-95 overflow-hidden"
                 >
@@ -259,16 +255,12 @@ export default function Hero({}: HeroProps) {
                   <span className="relative z-10">{t.contactUs}</span>
                 </button>
 
-                {/* Secondary Button */}
                 <button
                   onClick={() => {
-                    const pdfPath =
-                      language === "ar"
-                        ? "/AR-Services.pdf"
-                        : "/EN-Services.pdf";
+                    const pdfPath = language === "ar" ? "/AR-Services.pdf" : "/EN-Services.pdf";
                     window.open(pdfPath, "_blank");
                   }}
-                  className="group w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-10 lg:px-14 py-3.5 sm:py-4 lg:py-5 bg-white/5 hover:bg-white/10 border-2 border-white/20 hover:border-yellow-500/60 text-white rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-yellow-500/10"
+                  className="group w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-10 lg:px-14 py-3.5 sm:py-4 lg:py-5 bg-white/5 hover:bg-white/10 border-2 border-white/20 hover:border-yellow-500/60 text-white rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-yellow-500/10 hover:-translate-y-0.5 active:translate-y-0"
                 >
                   <span className="group-hover:text-yellow-400 transition-colors">
                     {t.viewServices}
@@ -279,10 +271,21 @@ export default function Hero({}: HeroProps) {
           </div>
         </main>
 
-        {/* Footer */}
-        <footer className="flex-shrink-0 pb-4 sm:pb-6 lg:pb-8 px-4 sm:px-6 lg:px-8">
-          {/* Footer content removed - will be added in other sections */}
-        </footer>
+        {/* Slide Indicators */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
+          {backgroundImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                index === currentImageIndex 
+                  ? 'bg-yellow-500 w-8' 
+                  : 'bg-white/40 hover:bg-white/60 w-2'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
 
       <style jsx>{`
