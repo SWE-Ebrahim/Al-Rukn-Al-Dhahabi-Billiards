@@ -1,32 +1,35 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useLanguage } from '../context/LanguageContext';
-import { MapPin, Phone } from 'lucide-react';
-import { FaTiktok, FaWhatsapp, FaInstagram } from 'react-icons/fa';
+import { useState, useEffect } from "react";
+import { useLanguage } from "../context/LanguageContext";
+import { MapPin, Phone } from "lucide-react";
+import { FaTiktok, FaWhatsapp, FaInstagram } from "react-icons/fa";
 
 export default function Contact() {
   const { language, translations } = useLanguage();
-  const isRTL = language === 'ar';
+  const isRTL = language === "ar";
 
   const whatsappLink = `https://wa.me/971542002332?text=${encodeURIComponent(
-    isRTL ? 'مرحباً، أريد الاستفسار عن الخدمات' : 'Hello, I would like to enquire about your services'
+    isRTL
+      ? "مرحباً، أريد الاستفسار عن الخدمات"
+      : "Hello, I would like to enquire about your services",
   )}`;
 
-  const mapsLink = 'https://maps.app.goo.gl/jWcPmvJwTzk3QoW5A';
-  const instagramLink = 'https://www.instagram.com/alrukn.aldhahabi/';
-  const tiktokLink = 'https://www.tiktok.com/@alrukn.aldhahabi';
+  const mapsLink = "https://maps.app.goo.gl/jWcPmvJwTzk3QoW5A";
+  const instagramLink = "https://www.instagram.com/alrukn.aldhahabi/";
+  const tiktokLink = "https://www.tiktok.com/@alrukn.aldhahabi";
 
   return (
     <section
       id="contact"
       className="min-h-screen py-12 lg:py-20 bg-[var(--color-bg)] flex items-center"
-      dir={isRTL ? 'rtl' : 'ltr'}
+      dir={isRTL ? "rtl" : "ltr"}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header - Responsive typography */}
-        <div className={`text-center mb-6 sm:mb-8 lg:mb-12 ${isRTL ? 'font-arabic' : ''}`}>
-          
+        <div
+          className={`text-center mb-6 sm:mb-8 lg:mb-12 ${isRTL ? "font-arabic" : ""}`}
+        >
           <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[var(--color-text-primary)] mb-2 sm:mb-3 leading-tight">
             {translations.contact_title}
           </h2>
@@ -36,7 +39,7 @@ export default function Contact() {
         {/* Two Column Layout - Better responsive spacing */}
         <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 max-w-5xl mx-auto">
           {/* Left Column: Contact Info */}
-          <div className={`${isRTL ? 'font-arabic' : ''} space-y-8`}>
+          <div className={`${isRTL ? "font-arabic" : ""} space-y-8`}>
             {/* Address */}
             <a
               href={mapsLink}
@@ -63,7 +66,7 @@ export default function Contact() {
               <Phone className="w-6 h-6 text-[var(--color-gold-dark)] flex-shrink-0 group-hover:scale-110 transition-transform" />
               <div>
                 <h3 className="font-bold text-[var(--color-text-primary)]">
-                  {translations.contact_phone}
+                  <span dir="ltr">{translations.contact_phone}</span>
                 </h3>
               </div>
             </a>
@@ -95,7 +98,7 @@ export default function Contact() {
           </div>
 
           {/* Right Column: WhatsApp CTA */}
-          <div className={`${isRTL ? 'font-arabic' : ''}`}>
+          <div className={`${isRTL ? "font-arabic" : ""}`}>
             <div className="card p-8 lg:p-10 text-center bg-gradient-to-br from-green-50 to-green-100/50 border-green-200">
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-500 mb-6">
                 <FaWhatsapp className="w-10 h-10 text-white" />
@@ -104,7 +107,7 @@ export default function Contact() {
                 {translations.contact_wa_title}
               </h3>
               <p className="text-green-700 mb-6 font-semibold text-lg">
-                {translations.contact_phone}
+                <span dir="ltr">{translations.contact_phone}</span>
               </p>
               <a
                 href={whatsappLink}
