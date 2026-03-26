@@ -1,31 +1,48 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "[![Next.js](https://img.shields.io/badge/Next.js-15.5-black?logo=next.js)](https://nextjs.org)\r [![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://reactjs.org)\r [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org)\r [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?logo=tailwind-css)](https://tailwindcss.com)",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SWE-Ebrahim/Al-Rukn-Al-Dhahabi-Billiards.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/SWE-Ebrahim/Al-Rukn-Al-Dhahabi-Billiards/issues"
+  },
+  "homepage": "https://github.com/SWE-Ebrahim/Al-Rukn-Al-Dhahabi-Billiards#readme",
   "dependencies": {
-    "cloudinary": "^2.6.0",
-    "dotenv": "^17.2.3",
-    "lucide-react": "^0.562.0",
-    "next": "^15.5.15",
-    "next-cloudinary": "^6.16.0",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "react-icons": "^5.5.0"
+    "cloudinary": "^2.9.0",
+    "dotenv": "^17.3.1",
+    "lucide-react": "^1.7.0",
+    "next": "^16.2.1",
+    "next-cloudinary": "^6.17.5",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-icons": "^5.6.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.2.3",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@tailwindcss/postcss": "^4.2.2",
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^10.1.0",
+    "eslint-config-next": "^16.2.1",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.2"
   }
 }

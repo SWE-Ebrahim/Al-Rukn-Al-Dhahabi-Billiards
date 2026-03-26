@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Instagram, MapPin, Phone } from 'lucide-react';
-import { FaTiktok, FaWhatsapp } from 'react-icons/fa';
+import { MapPin, Phone } from 'lucide-react';
+import { FaTiktok, FaWhatsapp, FaInstagram } from 'react-icons/fa';
 
 export default function Contact() {
   const { language, translations } = useLanguage();
@@ -80,7 +80,7 @@ export default function Contact() {
                   rel="noopener noreferrer"
                   className="p-4 rounded-full bg-gradient-to-r from-pink-500/10 to-pink-600/10 border border-pink-500/30 hover:border-pink-500/50 transition-all hover:scale-110"
                 >
-                  <Instagram className="w-6 h-6 text-pink-500" />
+                  <FaInstagram className="w-6 h-6 text-pink-500" />
                 </a>
                 <a
                   href={tiktokLink}
