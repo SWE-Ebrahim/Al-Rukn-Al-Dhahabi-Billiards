@@ -1,22 +1,23 @@
-import { headers, cookies } from 'next/headers';
-import { Language } from '@/types/i18n';
-import Hero from './components/Hero';
-import Contact from './components/Contact';
-import SubSection from './components/SubSection';
-import Footer from './components/Footer';
+import { redirect } from 'next/navigation';
+import { cookies, headers } from 'next/headers';
 
 export default async function Home() {
-  const headersList = await headers();
   const cookieStore = await cookies();
+  const headersList = await headers();
   
-  const language = (cookieStore.get('language')?.value || headersList.get('x-language') || 'en') as Language;
-
-  return (
-    <>
-      <Hero />
-      <SubSection />
-      <Contact />
-      <Footer/>
-    </>
-  );
+  // Get locale from cookie
+  let locale = cookieStore.get('locale')?.value;
+  
+  // Fallback to Accept-Language header
+  if (!locale) {
+    const acceptLanguage = headersList.get('accept-language');
+    if (acceptLanguage && acceptLanguage.includes('ar')) {
+      locale = 'ar';
+    } else {
+      locale = 'en';
+    }
+  }
+  
+  // Redirect to locale-specific path
+  redirect(`/${locale}`);
 }

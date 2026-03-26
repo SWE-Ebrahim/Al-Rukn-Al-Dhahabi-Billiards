@@ -1,53 +1,184 @@
 @import 'tailwindcss';
 
-.font-arabic {
-  font-family: var(--font-cairo), sans-serif;
+/* ─── DESIGN TOKENS ───────────────────────────────────────────── */
+@theme {
+  /* Colors */
+  --color-bg:             #FAFAF8;
+  --color-bg-alt:         #F5F3EE;
+  --color-surface:        #FFFFFF;
+  --color-gold-primary:   #C9A84C;
+  --color-gold-light:     #E8C97A;
+  --color-gold-dark:      #A07830;
+  --color-text-primary:   #1A1208;
+  --color-text-secondary: #5C4A2A;
+  --color-text-muted:     #9C8664;
+  --color-border:         #E8DFC8;
+
+  /* Fonts */
+  --font-display: 'Cairo', sans-serif;
+  --font-body:    'Cairo', sans-serif;
+
+  /* Shadows */
+  --shadow-card:   0 4px 24px rgba(180, 140, 60, 0.10);
+  --shadow-hover:  0 12px 40px rgba(180, 140, 60, 0.20);
+  --shadow-button: 0 4px 16px rgba(180, 140, 60, 0.35);
 }
 
-/* RTL support */
+/* ─── BASE ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── TYPOGRAPHY ──────────────────────────────────────────────── */
+.font-arabic {
+  font-family: var(--font-display), sans-serif;
+}
+
+/* ─── RTL ─────────────────────────────────────────────────────── */
 [dir='rtl'] {
   text-align: right;
 }
 
-/* Smooth transitions */
-* {
-  transition-property: background-color, color, border-color, opacity, transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
+[dir='rtl'] .flip-rtl {
+  transform: scaleX(-1);
 }
 
-/* Remove transitions for elements that shouldn't animate */
-button, a, input, select, textarea {
-  transition-property: background-color, color, border-color, transform, box-shadow;
+/* ─── GOLD GRADIENT TEXT ──────────────────────────────────────── */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #A07830 0%, #C9A84C 40%, #E8C97A 70%, #C9A84C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Scrollbar styling for dark theme */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* ─── GOLD SHIMMER ANIMATION ──────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+.text-gold-shimmer {
+  background: linear-gradient(
+    90deg,
+    #A07830 0%,
+    #C9A84C 25%,
+    #F0D68A 50%,
+    #C9A84C 75%,
+    #A07830 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(234, 179, 8, 0.3);
-  border-radius: 4px;
+/* ─── SCROLL REVEAL ───────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(234, 179, 8, 0.5);
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* Better font rendering */
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ─── CARD ────────────────────────────────────────────────────── */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-/* Focus styles */
+.card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+}
+
+/* ─── GOLD BUTTON ─────────────────────────────────────────────── */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%);
+  background-size: 200% 100%;
+  color: #1A1208;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: var(--shadow-button);
+  transition: background-position 0.4s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn-gold:hover {
+  background-position: right center;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(180, 140, 60, 0.45);
+}
+
+/* ─── OUTLINE BUTTON ──────────────────────────────────────────── */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: transparent;
+  color: var(--color-gold-dark);
+  font-weight: 700;
+  border: 2px solid var(--color-gold-primary);
+  border-radius: 9999px;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-outline:hover {
+  background: var(--color-gold-primary);
+  color: #1A1208;
+  transform: translateY(-2px);
+}
+
+/* ─── SECTION DIVIDER ─────────────────────────────────────────── */
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #C9A84C 30%, #E8C97A 50%, #C9A84C 70%, transparent);
+  margin: 0 auto;
+}
+
+/* ─── BILLIARD BALL DOT ───────────────────────────────────────── */
+.ball-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.4);
+}
+
+/* ─── SCROLLBAR ───────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg-alt); }
+::-webkit-scrollbar-thumb { background: var(--color-gold-primary); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-gold-dark); }
+
+/* ─── FOCUS ───────────────────────────────────────────────────── */
 *:focus-visible {
-  outline: 2px solid rgba(234, 179, 8, 0.5);
+  outline: 2px solid var(--color-gold-primary);
   outline-offset: 2px;
 }

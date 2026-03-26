@@ -1,4 +1,8 @@
 User-agent: *
-Allow: /
-
+Allow: /en
+Allow: /ar
+Allow: /en/
+Allow: /ar/
+Disallow: /_next/
+Disallow: /api/
 Sitemap: https://alruknaldhahabi.com/sitemap.xml

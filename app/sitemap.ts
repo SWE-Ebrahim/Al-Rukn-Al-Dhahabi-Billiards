@@ -1,14 +1,21 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://alruknaldhahabi.com';
-
+  const base = 'https://alruknaldhahabi.com';
+  const lastModified = new Date();
+  
   return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
+    { 
+      url: `${base}/en`, 
+      lastModified, 
+      changeFrequency: 'weekly', 
+      priority: 1.0 
+    },
+    { 
+      url: `${base}/ar`, 
+      lastModified, 
+      changeFrequency: 'weekly', 
+      priority: 1.0 
     },
   ];
 }
