@@ -5,71 +5,48 @@ const locales = ['en', 'ar'];
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Skip static files and special paths
+  // Normalize pathname (remove trailing slashes except for root)
+  const normalizedPath = pathname.endsWith('/') && pathname !== '/' 
+    ? pathname.slice(0, -1) 
+    : pathname;
+  
+  // Skip static files, API routes, and file extensions
   if (
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/api') ||
-    pathname.includes('.')
+    normalizedPath.startsWith('/_next') ||
+    normalizedPath.startsWith('/api') ||
+    /\.[^/]+$/.test(normalizedPath)
   ) {
     return NextResponse.next();
   }
   
-  // Check if pathname already has a locale
-  const hasLocale = locales.some(locale => 
-    pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  // Check if pathname already has a locale prefix
+  const pathnameHasLocale = locales.some(locale => 
+    normalizedPath === `/${locale}` || normalizedPath.startsWith(`/${locale}/`)
   );
   
-  if (hasLocale) {
+  // If already has locale, allow it through without redirect
+  if (pathnameHasLocale) {
     return NextResponse.next();
   }
   
-  // Get locale from cookie or Accept-Language header
-  const locale = request.cookies.get('locale')?.value || 'en';
+  // Get locale from cookie or default to English
+  const preferredLocale = request.cookies.get('locale')?.value || 'en';
   
-  // Redirect root to locale-prefixed path
-  return NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url));
+  // Only redirect if not already on a locale path
+  return NextResponse.redirect(
+    new URL(`/${preferredLocale}${normalizedPath}`, request.url)
+  );
 }
 
 export const config = {
   matcher: [
+    /*
+     * Match all pathnames except:
+     * - _next directory (Next.js internal files)
+     * - api directory (API routes)
+     * - files with extensions (images, favicon, etc.)
+     * - sitemap.xml and robots.txt
+     */
     '/((?!_next|api|.*\\..*|_next/static|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 };
-
-// Deleted:import { NextRequest, NextResponse } from 'next/server';
-// Deleted:
-// Deleted:const locales = ['en', 'ar'];
-// Deleted:
-// Deleted:export function middleware(request: NextRequest) {
-// Deleted:  const { pathname } = request.nextUrl;
-// Deleted:  
-// Deleted:  // Skip static files and special paths
-// Deleted:  if (
-// Deleted:    pathname.startsWith('/_next') ||
-// Deleted:    pathname.startsWith('/api') ||
-// Deleted:    pathname.includes('.')
-// Deleted:  ) {
-// Deleted:    return NextResponse.next();
-// Deleted:  }
-// Deleted:  
-// Deleted:  // Check if pathname already has a locale
-// Deleted:  const hasLocale = locales.some(locale => 
-// Deleted:    pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-// Deleted:  );
-// Deleted:  
-// Deleted:  if (hasLocale) {
-// Deleted:    return NextResponse.next();
-// Deleted:  }
-// Deleted:  
-// Deleted:  // Get locale from cookie or Accept-Language header
-// Deleted:  const locale = request.cookies.get('locale')?.value || 'en';
-// Deleted:  
-// Deleted:  // Redirect root to locale-prefixed path
-// Deleted:  return NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url));
-// Deleted:}
-// Deleted:
-// Deleted:export const config = {
-// Deleted:  matcher: [
-// Deleted:    '/((?!_next|api|.*\\..*|_next/static|favicon.ico|sitemap.xml|robots.txt).*)',
-// Deleted:  ],
-// Deleted:};
