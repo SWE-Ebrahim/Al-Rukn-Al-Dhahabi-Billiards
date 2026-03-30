@@ -14,7 +14,7 @@ export default function Contact() {
 
   const whatsappChannelLink = "https://whatsapp.com/channel/0029Vb7NMQaGU3BK3yTXrZ1c";
   const mapsLink = "https://www.google.com/maps/place/Al+Rukn+Al+Dhahabi+Billiards+%D8%A7%D9%84%D8%B1%D9%83%D9%86+%D8%A7%D9%84%D8%B0%D9%87%D8%A8%D9%8A+%D9%84%D9%84%D8%A8%D9%84%D9%8A%D8%A7%D8%B1%D8%AF%D9%88%E2%80%AD/@25.3949008,55.4360865,15z/data=!4m6!3m5!1s0x3e5f59ac4e59252d:0x1e3392179b1580ff!8m2!3d25.3926971!4d55.4391933!16s%2Fg%2F11x7qxylq7?authuser=0&entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D";
-  const mapEmbedUrl = "https://maps.google.com/maps?q=25.392703,55.439188&z=16&output=embed";
+  const mapEmbedUrl = "https://www.google.com/maps/place/Al+Rukn+Al+Dhahabi+Billiards+%D8%A7%D9%84%D8%B1%D9%83%D9%86+%D8%A7%D9%84%D8%B0%D9%87%D8%A8%D9%8A+%D9%84%D9%84%D8%A8%D9%84%D9%8A%D8%A7%D8%B1%D8%AF%D9%88%E2%80%AD/@25.3949008,55.4360865,15z/data=!4m6!3m5!1s0x3e5f59ac4e59252d:0x1e3392179b1580ff!8m2!3d25.3926971!4d55.4391933!16s%2Fg%2F11x7qxylq7?authuser=0&entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D";
 
   return (
     <section
