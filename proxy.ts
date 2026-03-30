@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const locales = ['en', 'ar'];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
   // Normalize pathname (remove trailing slashes except for root)
@@ -29,13 +29,32 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  // Get locale from cookie or default to English
-  const preferredLocale = request.cookies.get('locale')?.value || 'en';
-  
-  // Only redirect if not already on a locale path
-  return NextResponse.redirect(
-    new URL(`/${preferredLocale}${normalizedPath}`, request.url)
-  );
+  // Get locale: check cookie first, then Accept-Language header, then default to 'en'
+  const savedLocale = request.cookies.get('NEXT_LOCALE')?.value
+    || request.cookies.get('locale')?.value;
+
+  let preferredLocale = 'en';
+  if (savedLocale && locales.includes(savedLocale)) {
+    preferredLocale = savedLocale;
+  } else {
+    // Parse browser Accept-Language header for first-time visitors
+    const acceptLang = request.headers.get('accept-language') ?? '';
+    const browserLang = acceptLang
+      .split(',')
+      .map(l => l.split(';')[0].trim().toLowerCase().slice(0, 2))
+      .find(l => locales.includes(l));
+    if (browserLang) preferredLocale = browserLang;
+  }
+
+  // Redirect and persist locale choice in cookie
+  const redirectUrl = new URL(`/${preferredLocale}${normalizedPath}`, request.url);
+  const response = NextResponse.redirect(redirectUrl);
+  response.cookies.set('NEXT_LOCALE', preferredLocale, {
+    maxAge: 60 * 60 * 24 * 365,
+    path: '/',
+    sameSite: 'lax',
+  });
+  return response;
 }
 
 export const config = {

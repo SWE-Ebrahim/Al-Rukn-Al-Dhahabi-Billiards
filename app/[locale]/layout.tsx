@@ -1,6 +1,8 @@
 import { Cairo } from 'next/font/google';
 import type { Metadata } from 'next';
 import { LanguageProvider } from '../context/LanguageContext';
+import { ThemeProvider } from '../context/ThemeContext';
+import FloatingNav from '../components/FloatingNav';
 import '../globals.css';
 
 const cairo = Cairo({
@@ -206,8 +208,8 @@ function buildSchema(locale: 'en' | 'ar') {
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: 25.392707887316476,
-      longitude: 55.43918952665708,
+      latitude: 25.392703,
+      longitude: 55.439188,
     },
     sameAs: [
       'https://www.instagram.com/alrukn.aldhahabi/',
@@ -226,7 +228,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   const schema = buildSchema(locale as 'en' | 'ar');
 
   return (
-    <html lang={locale} dir={isAr ? 'rtl' : 'ltr'} className={cairo.variable} data-scroll-behavior="smooth">
+    <html lang={locale} dir={isAr ? 'rtl' : 'ltr'} className={cairo.variable} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <meta
           name="viewport"
@@ -241,8 +243,8 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         {/* Geo meta tags */}
         <meta name="geo.region" content="AE-AJ" />
         <meta name="geo.placename" content="Ajman, UAE" />
-        <meta name="geo.position" content="25.392707887316476;55.43918952665708" />
-        <meta name="ICBM" content="25.392707887316476, 55.43918952665708" />
+        <meta name="geo.position" content="25.392703;55.439188" />
+        <meta name="ICBM" content="25.392703, 55.439188" />
         
         {/* Local Business Structured Data */}
         <script
@@ -253,10 +255,13 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         />
       </head>
 
-      <body>
-        <LanguageProvider initialLanguage={locale as 'en' | 'ar'}>
-          {children}
-        </LanguageProvider>
+      <body suppressHydrationWarning>
+        <ThemeProvider>
+          <LanguageProvider initialLanguage={locale as 'en' | 'ar'}>
+            <FloatingNav />
+            {children}
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

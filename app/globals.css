@@ -182,3 +182,94 @@ body {
   outline: 2px solid var(--color-gold-primary);
   outline-offset: 2px;
 }
+
+/* ─── THEME TRANSITION ────────────────────────────────────────── */
+*, *::before, *::after {
+  transition: background-color 0.4s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ─── LIGHT THEME OVERRIDES ───────────────────────────────────── */
+[data-theme='light'] {
+  /* Main surfaces */
+  --page-bg: #f5f0e8;
+}
+
+[data-theme='light'] body {
+  background-color: #f5f0e8;
+  color: #1a1208;
+}
+
+/* Main section backgrounds */
+[data-theme='light'] section {
+  background-color: #f5f0e8 !important;
+}
+
+/* Dark surface cards → warm cream */
+[data-theme='light'] .bg-\[\#0d1117\] {
+  background-color: #f5f0e8 !important;
+}
+
+[data-theme='light'] .bg-\[\#161b22\] {
+  background-color: #ffffff !important;
+}
+
+[data-theme='light'] .bg-\[\#1c222b\] {
+  background-color: #f0e8d8 !important;
+}
+
+[data-theme='light'] .bg-\[\#0a0a0a\] {
+  background-color: #1a1208 !important;
+}
+
+/* Text overrides */
+[data-theme='light'] .text-white {
+  color: #1a1208 !important;
+}
+
+[data-theme='light'] .text-gray-200,
+[data-theme='light'] .text-gray-300 {
+  color: #3d2e14 !important;
+}
+
+[data-theme='light'] .text-gray-400,
+[data-theme='light'] .text-gray-500 {
+  color: #7a6040 !important;
+}
+
+[data-theme='light'] .text-gray-600 {
+  color: #9c8664 !important;
+}
+
+/* Borders */
+[data-theme='light'] .border-white\/10 {
+  border-color: rgba(160, 120, 48, 0.25) !important;
+}
+
+[data-theme='light'] .border-white\/5 {
+  border-color: rgba(160, 120, 48, 0.15) !important;
+}
+
+/* Floating Nav */
+[data-theme='light'] .backdrop-blur-xl,
+[data-theme='light'] .backdrop-blur-2xl {
+  background-color: rgba(245, 240, 232, 0.92) !important;
+}
+
+/* Ambient glows → warm gold tones */
+[data-theme='light'] .bg-emerald-500\/10,
+[data-theme='light'] .bg-cyan-500\/10,
+[data-theme='light'] .bg-emerald-500\/5 {
+  opacity: 0.3;
+}
+
+/* Footer dark bg in light mode */
+[data-theme='light'] footer {
+  background-color: #1a1208 !important;
+}
+
+[data-theme='light'] footer .text-white,
+[data-theme='light'] footer span,
+[data-theme='light'] footer p,
+[data-theme='light'] footer a {
+  color: inherit;
+}
