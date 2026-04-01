@@ -31,15 +31,24 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: #0d1117; /* Match your dark theme */
+  color-scheme: dark;
+}
+
+/* CRITICAL: Prevent white flash on load & during scroll */
+html *, html *::before, html *::after {
+  background-color: #0d1117 !important;
 }
 
 body {
-  background-color: var(--color-bg);
+  background-color: #0d1117;
   color: var(--color-text-primary);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 /* ─── TYPOGRAPHY ──────────────────────────────────────────────── */
@@ -272,4 +281,19 @@ body {
 [data-theme='light'] footer p,
 [data-theme='light'] footer a {
   color: inherit;
+}
+
+/* Hide content until loaded (optional) */
+.loading {
+  opacity: 0;
+}
+
+.loaded {
+  opacity: 1;
+}
+
+/* Prevent hydration flash */
+#__next {
+  background-color: #0d1117;
+  min-height: 100vh;
 }
