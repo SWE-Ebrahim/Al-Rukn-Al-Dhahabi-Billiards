@@ -44,7 +44,7 @@ html > *, body > * {
 
 /* Force GPU compositing for scroll performance */
 body {
-  background-color: #0d1117; /* Match dark theme - prevents white flash during scroll */
+  background-color: #0d1117; 
   color: var(--color-text-primary);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -52,8 +52,8 @@ body {
   overflow-x: hidden;
   opacity: 1;
   transition: opacity 0.3s ease;
-  transform: translateZ(0); /* GPU acceleration */
-  will-change: auto; /* Reset will-change to avoid memory issues */
+  /* REMOVED: transform: translateZ(0); */
+  will-change: auto; 
 }
 
 /* CRITICAL FIX: Create permanent dark overlay to prevent ANY white flash */
@@ -314,12 +314,7 @@ img {
   will-change: transform, opacity;
 }
 
-/* Force GPU layer for fixed/sticky elements */
-.fixed,
-.sticky {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
+/* Removed problematic .fixed and .sticky overrides */
 
 /* Disable expensive animations on mobile */
 @media (max-width: 768px), (prefers-reduced-motion: reduce) {

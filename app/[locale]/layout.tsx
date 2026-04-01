@@ -2,6 +2,7 @@ import { Cairo } from 'next/font/google';
 import type { Metadata } from 'next';
 import { LanguageProvider } from '../context/LanguageContext';
 import { ThemeProvider } from '../context/ThemeContext';
+import FloatingNav from '../components/FloatingNav';
 import '../globals.css';
 
 const cairo = Cairo({
@@ -257,6 +258,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       <body suppressHydrationWarning>
         <ThemeProvider>
           <LanguageProvider initialLanguage={locale as 'en' | 'ar'}>
+            <FloatingNav />
             {children}
           </LanguageProvider>
         </ThemeProvider>
