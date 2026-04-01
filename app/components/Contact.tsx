@@ -23,9 +23,9 @@ export default function Contact() {
       className="min-h-screen flex items-center justify-center py-12 lg:py-24 bg-[#0d1117] relative overflow-hidden"
       dir={isRTL ? "rtl" : "ltr"}
     >
-      {/* Background glow */}
+      {/* Background glow - DISABLED ON MOBILE */}
       <motion.div 
-        className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none -z-10"
+        className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none -z-10 hidden md:block"
         animate={{ 
           scale: [1, 1.15, 1],
           opacity: [0.5, 0.7, 0.5]

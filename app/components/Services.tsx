@@ -5,7 +5,8 @@ import { Gamepad2 } from 'lucide-react';
 import { FaTableTennis } from 'react-icons/fa';
 import { RiBilliardsFill } from 'react-icons/ri';
 import { GiPoolTriangle } from 'react-icons/gi';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 
 const images = {
   billiards: 'https://images.unsplash.com/photo-1666193183128-6ec58995f672?q=80&w=1374&auto=format&fit=crop',
@@ -17,6 +18,8 @@ const images = {
 export default function Services() {
   const { language } = useLanguage();
   const isRTL = language === 'ar';
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-50px" });
 
   const services = [
     {
@@ -71,12 +74,13 @@ export default function Services() {
 
   return (
     <section
+      ref={sectionRef}
       id="services"
       className="min-h-screen flex items-center justify-center py-16 lg:py-24 bg-[#0d1117] relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <motion.div 
-        className="absolute top-1/4 left-1/3 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[150px] pointer-events-none -z-10"
+        className="absolute top-1/4 left-1/3 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[150px] pointer-events-none -z-10 hidden lg:block"
         animate={{ 
           scale: [1, 1.15, 1],
           opacity: [0.3, 0.5, 0.3]
@@ -92,8 +96,7 @@ export default function Services() {
         <motion.div 
           className={`text-center flex flex-col items-center mb-16 ${isRTL ? 'font-arabic' : ''}`}
           initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
         >
           <p className="text-gray-400 text-sm md:text-base font-semibold tracking-widest uppercase mb-2">
@@ -112,11 +115,10 @@ export default function Services() {
             <motion.div
               key={service.id}
               initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               whileHover={{ scale: 1.03, y: -8 }}
-              className={`relative h-72 rounded-2xl overflow-hidden transition-all duration-500 transform group border ${service.border} ${service.glow}`}
+              className="relative h-72 rounded-2xl overflow-hidden transition-all duration-500 transform group border"
             >
               <div 
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"

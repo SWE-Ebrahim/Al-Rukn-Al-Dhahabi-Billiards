@@ -72,9 +72,9 @@ export default function About() {
       className="min-h-screen flex items-center justify-center py-16 lg:py-24 bg-[#0d1117] relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Background glow for depth */}
+      {/* Background glow for depth - DISABLED ON MOBILE */}
       <motion.div 
-        className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none -z-10"
+        className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none -z-10 hidden md:block"
         animate={{ 
           scale: [1, 1.1, 1],
           opacity: [0.5, 0.7, 0.5]
@@ -86,7 +86,7 @@ export default function About() {
         }}
       />
       <motion.div 
-        className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none -z-10"
+        className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none -z-10 hidden md:block"
         animate={{ 
           scale: [1.1, 1, 1.1],
           opacity: [0.5, 0.7, 0.5]

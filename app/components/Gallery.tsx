@@ -2,14 +2,17 @@
 
 import { useLanguage } from '../context/LanguageContext';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useRef, memo } from 'react';
 
 export default function Gallery() {
   const { language } = useLanguage();
   const isRTL = language === 'ar';
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-50px" });
 
   const cloudinaryUrl = (publicId: string, transform = 'f_auto,q_auto:low,c_fill,w_600,h_450') => {
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'dtwjhjtjw';
     return `https://res.cloudinary.com/${cloudName}/image/upload/${transform}/${publicId}`;
   };
 
@@ -25,13 +28,14 @@ export default function Gallery() {
 
   return (
     <section
+      ref={sectionRef}
       id="gallery"
       className="py-16 lg:py-24 bg-[#0d1117] relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Background glow */}
+      {/* Background glow - DISABLED ON MOBILE */}
       <motion.div 
-        className="absolute top-1/2 left-3/4 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none -z-10"
+        className="absolute top-1/2 left-3/4 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none -z-10 hidden md:block"
         animate={{ 
           scale: [1, 1.2, 1],
           opacity: [0.5, 0.7, 0.5]
@@ -49,8 +53,7 @@ export default function Gallery() {
         <motion.div 
           className={`text-center flex flex-col items-center mb-12 ${isRTL ? 'font-arabic' : ''}`}
           initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
         >
           <p className="text-gray-400 text-sm md:text-base font-semibold tracking-widest uppercase mb-2">
@@ -70,8 +73,7 @@ export default function Gallery() {
             <motion.div
               key={idx}
               initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
               whileHover={{ scale: 1.05, y: -5 }}
               className="relative overflow-hidden rounded-xl bg-[#161b22] border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(212,175,55,0.15)] hover:border-[#d4af37]/40 transition-all duration-300 aspect-[4/3]"
@@ -83,6 +85,9 @@ export default function Gallery() {
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                 className="object-cover transition-transform duration-500 hover:scale-105"
                 loading="lazy"
+                quality={75}
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRg..."
               />
 
               {/* Optional subtle overlay */}

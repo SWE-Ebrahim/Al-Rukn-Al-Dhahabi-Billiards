@@ -4,7 +4,8 @@ import { useLanguage } from "../context/LanguageContext";
 import { MapPin, ChevronDown } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, memo, useCallback } from "react";
+import Image from "next/image";
 
 /* ─── 3-D tilt on hover ─── */
 function useTilt() {
@@ -28,26 +29,30 @@ export default function Hero() {
   const isRTL = language === "ar";
 
   /* particles — client-only to avoid hydration mismatch */
-  const [particles, setParticles] = useState<
+  const [isMounted, setIsMounted] = useState(false);
+  const [particles] = useState<
     { id: number; left: string; bottom: string; duration: number; delay: number }[]
-  >([]);
+  >(
+    () => Array.from({ length: 18 }, (_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      bottom: `-${Math.random() * 10}px`,
+      duration: 8 + Math.random() * 10,
+      delay: Math.random() * 12,
+    }))
+  );
+
   useEffect(() => {
-    setParticles(
-      Array.from({ length: 28 }, (_, i) => ({
-        id: i,
-        left: `${Math.random() * 100}%`,
-        bottom: `-${Math.random() * 10}px`,
-        duration: 8 + Math.random() * 10,
-        delay: Math.random() * 12,
-      }))
-    );
+    setIsMounted(true);
   }, []);
 
   const tilt1 = useTilt();
   const tilt2 = useTilt();
 
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'dtwjhjtjw';
+  
   const cloud = (id: string, w = 1280, h = 720) =>
-    `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto:low,c_fill,w_${w},h_${h}/${id}`;
+    `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto:low,c_fill,w_${w},h_${h}/${id}`;
 
   const waLink = `https://wa.me/971542002332?text=${encodeURIComponent(
     isRTL ? "مرحباً، أريد الاستفسار عن الخدمات" : "Hello, I would like to enquire about your services"
@@ -61,7 +66,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-dvh w-full flex items-center justify-center overflow-hidden bg-[#06080d]"
+      className="relative min-h-dvh w-full flex items-center justify-center overflow-hidden bg-[#0d1117]"
       dir={isRTL ? "rtl" : "ltr"}
     >
       {/* ── font ── */}
@@ -84,25 +89,28 @@ export default function Hero() {
       {/* ══════════════ BACKGROUND ══════════════ */}
       <div className="absolute inset-0 z-0 overflow-hidden">
 
-        {/* main bg image */}
+        {/* main bg image - OPTIMIZED WITH NEXT.JS IMAGE */}
         <motion.div
           className="absolute inset-0"
           initial={{ opacity: 0, scale: 1.06 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 2.2, ease: "easeOut", delay: 0.5 }}
         >
-          <img
+          <Image
             src={cloud("background", 1600, 900)}
             alt="Al Rukn Al Dhahabi venue"
+            fill
+            sizes="100vw"
             className="w-full h-full object-cover object-center"
-            loading="eager"
+            priority
+            quality={75}
             fetchPriority="high"
           />
         </motion.div>
 
-        {/* moving gold grid */}
+        {/* moving gold grid - DISABLED ON MOBILE */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none hidden md:block"
           style={{
             backgroundImage:
               "linear-gradient(rgba(212,175,55,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.035) 1px, transparent 1px)",
@@ -120,23 +128,22 @@ export default function Hero() {
         <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#06080d] to-transparent" />
         <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-[#06080d]/60 to-transparent" />
 
-        {/* gold orbs */}
+        {/* gold orbs - REDUCED ANIMATION COMPLEXITY & MOBILE DISABLED */}
         {[
           { cls: "top-[-80px] left-[-80px] w-[420px] h-[420px]", color: "rgba(212,175,55,0.16)", dur: 7, d: 0 },
           { cls: "bottom-[-120px] right-[-80px] w-[520px] h-[520px]", color: "rgba(180,130,20,0.12)", dur: 9, d: 1.5 },
-          { cls: "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[280px]", color: "rgba(250,204,21,0.07)", dur: 5.5, d: 0.8 },
         ].map((o, i) => (
           <motion.div
             key={i}
-            className={`absolute rounded-full pointer-events-none ${o.cls}`}
+            className={`absolute rounded-full pointer-events-none hidden lg:block`}
             style={{ background: `radial-gradient(circle, ${o.color} 0%, transparent 70%)`, filter: "blur(50px)" }}
-            animate={{ scale: [1, 1.25, 1], opacity: [0.6, 1, 0.6] }}
+            animate={{ scale: [1, 1.15, 1], opacity: [0.6, 0.8, 0.6] }}
             transition={{ duration: o.dur, repeat: Infinity, ease: "easeInOut", delay: o.d }}
           />
         ))}
 
-        {/* particles */}
-        {particles.map((p) => (
+        {/* particles - only render after mount to prevent hydration mismatch */}
+        {isMounted && particles.map((p) => (
           <motion.div
             key={p.id}
             className="absolute w-[2px] h-[2px] rounded-full bg-[#d4af37]/60 pointer-events-none"

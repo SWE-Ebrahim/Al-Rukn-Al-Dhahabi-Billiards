@@ -2,7 +2,8 @@
 
 import { useLanguage } from '../context/LanguageContext';
 import { Star } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 
 const reviews = [
   {
@@ -40,16 +41,19 @@ const reviews = [
 export default function Reviews() {
   const { language } = useLanguage();
   const isRTL = language === 'ar';
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-50px" });
 
   return (
     <section
+      ref={sectionRef}
       id="reviews"
       className="py-16 lg:py-24 bg-[#0d1117] relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Ambient glow */}
+      {/* Ambient glow - DISABLED ON MOBILE */}
       <motion.div 
-        className="absolute top-1/2 right-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none -z-10"
+        className="absolute top-1/2 right-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none -z-10 hidden md:block"
         animate={{ 
           scale: [1, 1.15, 1],
           opacity: [0.4, 0.6, 0.4]
@@ -66,8 +70,7 @@ export default function Reviews() {
         <motion.div 
           className={`text-center mb-10 md:mb-14 ${isRTL ? 'font-arabic' : ''}`}
           initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
         >
           <p className="text-gray-400 text-sm font-semibold tracking-widest uppercase mb-2 border-b border-[#d4af37]/30 pb-2 inline-block">
@@ -83,8 +86,7 @@ export default function Reviews() {
           <motion.div 
             className="flex items-center justify-center gap-2 mt-4"
             initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <div className="flex gap-0.5">
@@ -102,8 +104,7 @@ export default function Reviews() {
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: idx * 0.15 }}
               whileHover={{ scale: 1.03, y: -5 }}
               className="group flex flex-col justify-between bg-[#161b22] border border-white/10 hover:border-[#d4af37]/40 rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_30px_rgba(212,175,55,0.12)] transition-all duration-400 transform hover:-translate-y-1"
