@@ -27,17 +27,6 @@ export default function Hero() {
   const { language } = useLanguage();
   const isRTL = language === "ar";
 
-  // Detect mobile - only load floating images on tablet+
-  const [isMobile, setIsMobile] = useState(true);
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 640);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   /* particles — client-only to avoid hydration mismatch */
   const [particles, setParticles] = useState<
     { id: number; left: string; bottom: string; duration: number; delay: number }[]
@@ -156,90 +145,6 @@ export default function Hero() {
             transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "linear" }}
           />
         ))}
-
-        {/* ── FLOAT IMAGE 1 — top-left — Hide on mobile */}
-        {!isMobile && (
-          <motion.div
-            ref={tilt1.ref}
-            onMouseMove={tilt1.onMove}
-            onMouseLeave={tilt1.onLeave}
-            className="absolute top-6 left-3 sm:top-10 sm:left-8 w-48 sm:w-60 md:w-72 lg:w-[300px] z-10"
-            style={{
-              perspective: 900,
-              rotateX: tilt1.rotX,
-              rotateY: tilt1.rotY,
-              aspectRatio: "4/3",
-            }}
-            initial={{ opacity: 0, x: -100, y: -50, rotate: -10 }}
-            animate={{ opacity: 1, x: 0, y: 0, rotate: -5 }}
-            transition={{ duration: 1.4, delay: 1.3, ease }}
-          >
-          <motion.div
-            className="absolute -inset-[1.5px] rounded-2xl"
-            style={{
-              background: "linear-gradient(135deg, rgba(253,224,71,0.7), rgba(234,179,8,0.3), rgba(146,64,14,0.45))",
-              filter: "blur(2px)",
-            }}
-            animate={{ opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="relative w-full h-full rounded-2xl overflow-hidden shadow-[0_12px_50px_rgba(0,0,0,0.6),0_0_40px_rgba(212,175,55,0.25)]"
-            whileHover={{ scale: 1.04 }}
-            transition={{ duration: 0.3 }}
-          >
-            <img 
-              src={cloud("image3", 500, 375)} 
-              alt="Premium billiards" 
-              className="w-full h-full object-cover" 
-              loading="eager"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-          </motion.div>
-        </motion.div>
-        )}
-
-        {/* ── FLOAT IMAGE 2 — bottom-right — Hide on mobile */}
-        {!isMobile && (
-          <motion.div
-            ref={tilt2.ref}
-            onMouseMove={tilt2.onMove}
-            onMouseLeave={tilt2.onLeave}
-            className="absolute bottom-14 right-3 sm:bottom-16 sm:right-8 w-48 sm:w-60 md:w-72 lg:w-[300px] z-10"
-            style={{
-              perspective: 900,
-              rotateX: tilt2.rotX,
-              rotateY: tilt2.rotY,
-              aspectRatio: "4/3",
-            }}
-            initial={{ opacity: 0, x: 100, y: 50, rotate: 10 }}
-            animate={{ opacity: 1, x: 0, y: 0, rotate: 4 }}
-            transition={{ duration: 1.4, delay: 1.5, ease }}
-          >
-          <motion.div
-            className="absolute -inset-[1.5px] rounded-2xl"
-            style={{
-              background: "linear-gradient(315deg, rgba(253,224,71,0.7), rgba(234,179,8,0.3), rgba(146,64,14,0.45))",
-              filter: "blur(2px)",
-            }}
-            animate={{ opacity: [1, 0.6, 1] }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="relative w-full h-full rounded-2xl overflow-hidden shadow-[0_12px_50px_rgba(0,0,0,0.6),0_0_40px_rgba(212,175,55,0.25)]"
-            whileHover={{ scale: 1.04 }}
-            transition={{ duration: 0.3 }}
-          >
-            <img 
-              src={cloud("image1", 500, 375)} 
-              alt="Luxury gaming lounge" 
-              className="w-full h-full object-cover"
-              loading="eager"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-          </motion.div>
-        </motion.div>
-        )}
       </div>
 
       {/* ══════════════ CORNER ACCENTS ══════════════ */}
