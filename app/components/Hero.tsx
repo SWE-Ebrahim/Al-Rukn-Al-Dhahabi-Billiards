@@ -27,6 +27,17 @@ export default function Hero() {
   const { language } = useLanguage();
   const isRTL = language === "ar";
 
+  // Detect mobile - only load floating images on tablet+
+  const [isMobile, setIsMobile] = useState(true);
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   /* particles — client-only to avoid hydration mismatch */
   const [particles, setParticles] = useState<
     { id: number; left: string; bottom: string; duration: number; delay: number }[]
@@ -146,22 +157,23 @@ export default function Hero() {
           />
         ))}
 
-        {/* ── FLOAT IMAGE 1 — top-left ── */}
-        <motion.div
-          ref={tilt1.ref}
-          onMouseMove={tilt1.onMove}
-          onMouseLeave={tilt1.onLeave}
-          className="absolute top-6 left-3 sm:top-10 sm:left-8 w-48 sm:w-60 md:w-72 lg:w-[300px] z-10 hidden sm:block"
-          style={{
-            perspective: 900,
-            rotateX: tilt1.rotX,
-            rotateY: tilt1.rotY,
-            aspectRatio: "4/3",
-          }}
-          initial={{ opacity: 0, x: -100, y: -50, rotate: -10 }}
-          animate={{ opacity: 1, x: 0, y: 0, rotate: -5 }}
-          transition={{ duration: 1.4, delay: 1.3, ease }}
-        >
+        {/* ── FLOAT IMAGE 1 — top-left — Hide on mobile */}
+        {!isMobile && (
+          <motion.div
+            ref={tilt1.ref}
+            onMouseMove={tilt1.onMove}
+            onMouseLeave={tilt1.onLeave}
+            className="absolute top-6 left-3 sm:top-10 sm:left-8 w-48 sm:w-60 md:w-72 lg:w-[300px] z-10"
+            style={{
+              perspective: 900,
+              rotateX: tilt1.rotX,
+              rotateY: tilt1.rotY,
+              aspectRatio: "4/3",
+            }}
+            initial={{ opacity: 0, x: -100, y: -50, rotate: -10 }}
+            animate={{ opacity: 1, x: 0, y: 0, rotate: -5 }}
+            transition={{ duration: 1.4, delay: 1.3, ease }}
+          >
           <motion.div
             className="absolute -inset-[1.5px] rounded-2xl"
             style={{
@@ -185,23 +197,25 @@ export default function Hero() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           </motion.div>
         </motion.div>
+        )}
 
-        {/* ── FLOAT IMAGE 2 — bottom-right ── */}
-        <motion.div
-          ref={tilt2.ref}
-          onMouseMove={tilt2.onMove}
-          onMouseLeave={tilt2.onLeave}
-          className="absolute bottom-14 right-3 sm:bottom-16 sm:right-8 w-48 sm:w-60 md:w-72 lg:w-[300px] z-10 hidden sm:block"
-          style={{
-            perspective: 900,
-            rotateX: tilt2.rotX,
-            rotateY: tilt2.rotY,
-            aspectRatio: "4/3",
-          }}
-          initial={{ opacity: 0, x: 100, y: 50, rotate: 10 }}
-          animate={{ opacity: 1, x: 0, y: 0, rotate: 4 }}
-          transition={{ duration: 1.4, delay: 1.5, ease }}
-        >
+        {/* ── FLOAT IMAGE 2 — bottom-right — Hide on mobile */}
+        {!isMobile && (
+          <motion.div
+            ref={tilt2.ref}
+            onMouseMove={tilt2.onMove}
+            onMouseLeave={tilt2.onLeave}
+            className="absolute bottom-14 right-3 sm:bottom-16 sm:right-8 w-48 sm:w-60 md:w-72 lg:w-[300px] z-10"
+            style={{
+              perspective: 900,
+              rotateX: tilt2.rotX,
+              rotateY: tilt2.rotY,
+              aspectRatio: "4/3",
+            }}
+            initial={{ opacity: 0, x: 100, y: 50, rotate: 10 }}
+            animate={{ opacity: 1, x: 0, y: 0, rotate: 4 }}
+            transition={{ duration: 1.4, delay: 1.5, ease }}
+          >
           <motion.div
             className="absolute -inset-[1.5px] rounded-2xl"
             style={{
@@ -225,6 +239,7 @@ export default function Hero() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           </motion.div>
         </motion.div>
+        )}
       </div>
 
       {/* ══════════════ CORNER ACCENTS ══════════════ */}
