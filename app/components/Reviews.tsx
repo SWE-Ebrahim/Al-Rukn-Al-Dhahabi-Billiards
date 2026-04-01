@@ -2,6 +2,7 @@
 
 import { useLanguage } from '../context/LanguageContext';
 import { Star } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const reviews = [
   {
@@ -47,11 +48,28 @@ export default function Reviews() {
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Ambient glow */}
-      <div className="absolute top-1/2 right-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none -z-10" />
+      <motion.div 
+        className="absolute top-1/2 right-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none -z-10"
+        animate={{ 
+          scale: [1, 1.15, 1],
+          opacity: [0.4, 0.6, 0.4]
+        }}
+        transition={{ 
+          duration: 9, 
+          repeat: Infinity, 
+          ease: "easeInOut" 
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Heading */}
-        <div className={`text-center mb-10 md:mb-14 ${isRTL ? 'font-arabic' : ''}`}>
+        <motion.div 
+          className={`text-center mb-10 md:mb-14 ${isRTL ? 'font-arabic' : ''}`}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7 }}
+        >
           <p className="text-gray-400 text-sm font-semibold tracking-widest uppercase mb-2 border-b border-[#d4af37]/30 pb-2 inline-block">
             {isRTL ? 'آراء العملاء' : 'WHAT PEOPLE SAY'}
           </p>
@@ -62,21 +80,32 @@ export default function Reviews() {
             {isRTL ? 'التقييمات' : 'Reviews'}
           </h2>
           {/* Google Maps badge */}
-          <div className="flex items-center justify-center gap-2 mt-4">
+          <motion.div 
+            className="flex items-center justify-center gap-2 mt-4"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
             <div className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-4 h-4 fill-[#d4af37] text-[#d4af37]" />
               ))}
             </div>
-            <span className="text-gray-400 text-sm font-medium">5.0 · Google Maps</span>
-          </div>
-        </div>
+            <span className="text-gray-400 text-sm font-medium">4.9 · Google Maps</span>
+          </motion.div>
+        </motion.div>
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {reviews.map((review, idx) => (
-            <div
+            <motion.div
               key={idx}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: idx * 0.15 }}
+              whileHover={{ scale: 1.03, y: -5 }}
               className="group flex flex-col justify-between bg-[#161b22] border border-white/10 hover:border-[#d4af37]/40 rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_30px_rgba(212,175,55,0.12)] transition-all duration-400 transform hover:-translate-y-1"
             >
               {/* Avatar + Name */}
@@ -113,7 +142,7 @@ export default function Reviews() {
                 </div>
                 <span className="text-gray-600 text-[11px] font-semibold tracking-wider uppercase">Google</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

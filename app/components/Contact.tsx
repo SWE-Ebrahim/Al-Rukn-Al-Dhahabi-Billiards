@@ -3,6 +3,7 @@
 import { useLanguage } from "../context/LanguageContext";
 import { MapPin, BellRing } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
+import { motion } from 'framer-motion';
 
 export default function Contact() {
   const { language } = useLanguage();
@@ -23,13 +24,30 @@ export default function Contact() {
       dir={isRTL ? "rtl" : "ltr"}
     >
       {/* Background glow */}
-      <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none -z-10" />
+      <motion.div 
+        className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none -z-10"
+        animate={{ 
+          scale: [1, 1.15, 1],
+          opacity: [0.5, 0.7, 0.5]
+        }}
+        transition={{ 
+          duration: 10, 
+          repeat: Infinity, 
+          ease: "easeInOut" 
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 relative">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
           {/* Left Column: Contact Cards */}
-          <div className={`${isRTL ? "font-arabic lg:order-2" : "lg:order-1"} flex flex-col justify-center`}>
+          <motion.div 
+            className={`${isRTL ? "font-arabic lg:order-2" : "lg:order-1"} flex flex-col justify-center`}
+            initial={{ opacity: 0, x: isRTL ? 80 : -80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.8 }}
+          >
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-b from-[#fce28b] via-[#d4af37] to-[#aa8925] mb-8 leading-tight drop-shadow-sm">
               {isRTL ? 'تواصل معنا' : 'Get in Touch'}
             </h2>
@@ -102,10 +120,16 @@ export default function Contact() {
               </a>
 
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Floating Dark Map */}
-          <div className={`relative ${isRTL ? 'lg:order-1' : 'lg:order-2'} w-full h-[250px] sm:h-[400px] lg:h-[550px] group mt-6 lg:mt-0`}>
+          <motion.div 
+            className={`relative ${isRTL ? 'lg:order-1' : 'lg:order-2'} w-full h-[250px] sm:h-[400px] lg:h-[550px] group mt-6 lg:mt-0`}
+            initial={{ opacity: 0, x: isRTL ? -80 : 80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-[0_15px_50px_rgba(0,0,0,0.8)] border border-white/10 group-hover:border-[#d4af37]/30 group-hover:shadow-[0_0_40px_rgba(212,175,55,0.15)] transition-all duration-500 bg-[#161b22]">
               <iframe
                 src={mapEmbedUrl}
@@ -117,7 +141,7 @@ export default function Contact() {
               ></iframe>
               <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_40px_rgba(13,17,23,0.9)]"></div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>

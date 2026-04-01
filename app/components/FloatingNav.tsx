@@ -67,8 +67,6 @@ export default function FloatingNav() {
       className={`fixed top-1/2 -translate-y-1/2 z-[100] ${
         isRTL ? 'left-4' : 'right-4'
       }`}
-      onMouseEnter={() => !isMobile && setIsOpen(true)}
-      onMouseLeave={() => !isMobile && setIsOpen(false)}
     >
       {/* Toggle Button (Mobile + Desktop Closed) */}
       <button
