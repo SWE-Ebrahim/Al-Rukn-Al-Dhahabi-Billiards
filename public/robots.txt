@@ -1,9 +1,9 @@
-# NEW_FILE_CODE
+# Al Rukn Al Dhahabi - Robots.txt
 User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://alruknaldhahabi.com/sitemap.xml
+Sitemap: https://www.alruknaldhahabi.com/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1

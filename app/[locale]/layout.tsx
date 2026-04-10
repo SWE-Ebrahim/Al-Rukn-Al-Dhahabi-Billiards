@@ -38,18 +38,48 @@ export async function generateMetadata({
       description:
         'صالة بلياردو وسنوكر وبلايستيشن وتنس طاولة وبينج بونج في جراند مول عجمان. تفضل مباشرة أو تواصل معنا على واتساب.',
       keywords: [
+        // Primary Arabic Keywords
+        'بليارد',
+        'بلياردو',
+        'سنوكر',
+        'بلايستيشن',
+        'الركن الذهبي',
+        
+        // Location-based Arabic
+        'بليارد عجمان',
         'بلياردو عجمان',
         'سنوكر عجمان',
         'بلايستيشن عجمان',
-        'الركن الذهبي',
+        'صالة بليارد عجمان',
+        'صالة بلياردو عجمان',
+        'مركز سنوكر عجمان',
+        'نادي بليارد عجمان',
+        'جراند مول عجمان',
+        
+        // Gaming & Entertainment Arabic
+        'ألعاب ترفيهية عجمان',
+        'ترفيه عجمان',
+        'منطقة ألعاب عجمان',
+        'مركز ترفيه عجمان',
+        'عجمان مراكز ترفيه',
+        
+        // Related Activities Arabic
         'تنس طاولة عجمان',
         'بينج بونج عجمان',
-        'ألعاب ترفيهية عجمان',
-        'جراند مول عجمان',
-        'صالة بلياردو عجمان',
-        'ترفيه عجمان',
-        'أفضل بلياردو في الإمارات',
-        'عجمان مراكز ترفيه',
+        '8-ball عجمان',
+        '9-ball عجمان',
+        
+        // Cross-language (Arabic + English)
+        'billiard عجمان',
+        'snooker عجمان',
+        'playstation عجمان',
+        'gaming عجمان',
+        
+        // Quality & Ranking Arabic
+        'أفضل بليارد في الإمارات',
+        'أفضل سنوكر في عجمان',
+        'أفضل بلياردو UAE',
+        'افضل صالة بليارد',
       ],
       authors: [{ name: 'Al Rukn Al Dhahabi' }],
       creator: 'Al Rukn Al Dhahabi',
@@ -60,16 +90,16 @@ export async function generateMetadata({
         telephone: true,
       },
       alternates: {
-        canonical: 'https://alruknaldhahabi.com/ar',
+        canonical: 'https://www.alruknaldhahabi.com/ar',
         languages: {
-          en: 'https://alruknaldhahabi.com/en',
-          ar: 'https://alruknaldhahabi.com/ar',
-          'x-default': 'https://alruknaldhahabi.com/en',
+          en: 'https://www.alruknaldhahabi.com/en',
+          ar: 'https://www.alruknaldhahabi.com/ar',
+          'x-default': 'https://www.alruknaldhahabi.com/en',
         },
       },
       openGraph: {
         type: 'website',
-        url: 'https://alruknaldhahabi.com/ar',
+        url: 'https://www.alruknaldhahabi.com/ar',
         siteName: 'الركن الذهبي',
         title: 'الركن الذهبي | بلياردو وسنوكر وبلايستيشن في عجمان',
         description:
@@ -107,7 +137,7 @@ export async function generateMetadata({
 
   // English metadata
   return {
-    metadataBase: new URL('https://alruknaldhahabi.com'),
+    metadataBase: new URL('https://www.alruknaldhahabi.com'),
     title: {
       default: 'Al Rukn Al Dhahabi | Billiard, Snooker & Gaming in Ajman',
       template: '%s | Al Rukn Al Dhahabi',
@@ -115,19 +145,117 @@ export async function generateMetadata({
     description:
       'Premium billiard hall, snooker tables, PlayStation, table tennis and ping pong in Grand Mall Ajman, UAE. Walk in or WhatsApp to book.',
     keywords: [
-      'billiard Ajman',
-      'billiards in Ajman',
-      'snooker Ajman',
-      'PlayStation Ajman',
-      'table tennis Ajman',
-      'ping pong Ajman',
-      'gaming zone Ajman',
+      // Primary English Keywords
+      'Billiards',
+      'Billiard',
+      'Snooker',
+      '8-Pool',
+      'Playstation',
+      'Gaming',
+      'Gaming Zone',
+      
+      // Location-based English
+      'Billiard Ajman',
+      'Billiards Ajman',
+      'Snooker Ajman',
+      'Playstation Ajman',
+      'Gaming Ajman',
+      'Gaming Zone Ajman',
+      '8-Pool Ajman',
+      'Pool Hall Ajman',
+      'Billiard Hall Ajman',
+      'Snooker Hall Ajman',
+      
+      // Variations & Synonyms
+      'billiard table Ajman',
+      'billiard tables Ajman',
+      'snooker table Ajman',
+      'snooker tables Ajman',
+      'pool table Ajman',
+      'pool tables Ajman',
+      '8 ball Ajman',
+      '8-ball Ajman',
+      '9 ball Ajman',
+      '9-ball Ajman',
+      
+      // Gaming Specific
+      'PS5 Ajman',
+      'PS4 Ajman',
+      'Playstation 5 Ajman',
+      'Playstation 4 Ajman',
+      'video games Ajman',
+      'console gaming Ajman',
+      'gaming lounge Ajman',
+      'gaming center Ajman',
+      'gaming club Ajman',
+      
+      // Location & Venue
       'Grand Mall Ajman',
       'Al Rukn Al Dhahabi',
-      'billiard hall UAE',
-      'entertainment Ajman',
-      'best billiard UAE',
-      'Ajman entertainment centers',
+      'billiard club Ajman',
+      'snooker club Ajman',
+      'pool club Ajman',
+      'sports lounge Ajman',
+      'recreation center Ajman',
+      'entertainment center Ajman',
+      
+      // Activity-based
+      'play billiards Ajman',
+      'play snooker Ajman',
+      'play pool Ajman',
+      'play 8-ball Ajman',
+      'billiard games Ajman',
+      'snooker games Ajman',
+      
+      // Quality & Ranking
+      'best billiard Ajman',
+      'best billiards Ajman',
+      'best snooker Ajman',
+      'top billiard Ajman',
+      'premier billiard Ajman',
+      'premium snooker Ajman',
+      'professional billiard Ajman',
+      
+      // Related Activities
+      'table tennis Ajman',
+      'ping pong Ajman',
+      'indoor sports Ajman',
+      'indoor games Ajman',
+      
+      // Intent-based Searches
+      'where to play billiards in Ajman',
+      'where to play snooker in Ajman',
+      'billiard near me Ajman',
+      'snooker near me Ajman',
+      'gaming zone near me Ajman',
+      'billiard hall near me',
+      'snooker hall near me',
+      
+      // Time-based
+      'billiard open now Ajman',
+      'snooker open late Ajman',
+      'evening entertainment Ajman',
+      'nightlife Ajman',
+      'weekend activities Ajman',
+      'things to do in Ajman',
+      
+      // Audience-based
+      'family entertainment Ajman',
+      'family fun Ajman',
+      'casual gaming Ajman',
+      'competitive gaming Ajman',
+      'social gaming Ajman',
+      'friends hangout Ajman',
+      
+      // UAE-wide
+      'billiard UAE',
+      'billiards UAE',
+      'snooker UAE',
+      'gaming UAE',
+      'billiard Emirates',
+      'snooker Emirates',
+      'Ajman entertainment',
+      'Ajman leisure',
     ],
     authors: [{ name: 'Al Rukn Al Dhahabi' }],
     creator: 'Al Rukn Al Dhahabi',
@@ -138,16 +266,16 @@ export async function generateMetadata({
       telephone: true,
     },
     alternates: {
-      canonical: 'https://alruknaldhahabi.com/en',
+      canonical: 'https://www.alruknaldhahabi.com/en',
       languages: {
-        en: 'https://alruknaldhahabi.com/en',
-        ar: 'https://alruknaldhahabi.com/ar',
-        'x-default': 'https://alruknaldhahabi.com/en',
+        en: 'https://www.alruknaldhahabi.com/en',
+        ar: 'https://www.alruknaldhahabi.com/ar',
+        'x-default': 'https://www.alruknaldhahabi.com/en',
       },
     },
     openGraph: {
       type: 'website',
-      url: 'https://alruknaldhahabi.com/en',
+      url: 'https://www.alruknaldhahabi.com/en',
       siteName: 'Al Rukn Al Dhahabi Billiards',
       title: 'Al Rukn Al Dhahabi | Billiard, Snooker & Gaming in Ajman',
       description: 'Premium billiard hall and gaming zone in Grand Mall Ajman, UAE.',
@@ -190,10 +318,10 @@ function buildSchema(locale: 'en' | 'ar') {
   return {
     '@context': 'https://schema.org',
     '@type': 'SportsActivityLocation',
-    '@id': 'https://alruknaldhahabi.com/#business',
+    '@id': 'https://www.alruknaldhahabi.com/#business',
     name: isAr ? 'الركن الذهبي للبلياردو' : 'Al Rukn Al Dhahabi Billiards',
     alternateName: isAr ? 'Al Rukn Al Dhahabi' : 'الركن الذهبي',
-    url: `https://alruknaldhahabi.com/${locale}`,
+    url: `https://www.alruknaldhahabi.com/${locale}`,
     telephone: '+971542002332',
     description: isAr
       ? 'صالة بلياردو وسنوكر وبلايستيشن في جراند مول عجمان.'
@@ -236,9 +364,9 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         />
         
         {/* Hreflang tags - CRITICAL for SEO */}
-        <link rel="alternate" hrefLang="en" href="https://alruknaldhahabi.com/en" />
-        <link rel="alternate" hrefLang="ar" href="https://alruknaldhahabi.com/ar" />
-        <link rel="alternate" hrefLang="x-default" href="https://alruknaldhahabi.com/en" />
+        <link rel="alternate" hrefLang="en" href="https://www.alruknaldhahabi.com/en" />
+        <link rel="alternate" hrefLang="ar" href="https://www.alruknaldhahabi.com/ar" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.alruknaldhahabi.com/en" />
         
         {/* Geo meta tags */}
         <meta name="geo.region" content="AE-AJ" />
